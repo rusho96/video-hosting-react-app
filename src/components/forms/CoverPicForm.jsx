@@ -1,0 +1,39 @@
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useUpdateCoverPicMutation } from "../../api/apiSlice";
+
+
+export const CoverPicForm = function ({ user }) {
+    const { register, handleSubmit } = useForm();
+    const [updateCoverPic, { isLoading }] = useUpdateCoverPicMutation();
+
+    const onSubmit = async (data) => {
+        if (!data.coverPic?.[0]) return;
+        const formData = new FormData();
+        formData.append("coverPic", data.coverPic[0]);
+
+        try {
+            await updateCoverPic(formData).unwrap();
+            alert("Cover picture updated!");
+        } catch {
+            alert("Failed to update cover pic");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <input type="file" accept="image/*" {...register("coverPic", { required: true })} />
+            {user?.cover && (
+                <img src={user.cover} alt="Cover" className="mt-2 w-full h-32 object-cover rounded" />
+            )}
+            <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+                {isLoading ? "Uploading..." : "Upload"}
+            </button>
+        </form>
+    );
+}
+
