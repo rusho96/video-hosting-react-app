@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ChannelHeader from "../components/ChannelHeader";
-import ChannelTabs from "../components/ChannelTabs";
+import ChannelTabs from "../components/Channeltabs";
 import ChannelVideos from "../components/Channelvideos";
 import ChannelPlaylists from "../components/Channelplaylist";
 import ChannelAbout from "../components/ChannelAbout";
