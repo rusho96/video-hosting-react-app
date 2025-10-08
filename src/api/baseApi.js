@@ -3,6 +3,7 @@ import axios from "axios";
 import { store } from "../store/store";
 import { logout } from "../store/AuthSlice";
 const URL = import.meta.env.VITE_APP_URL
+console.log(URL)
 const api = axios.create({
   baseURL: URL,
   withCredentials: true, 

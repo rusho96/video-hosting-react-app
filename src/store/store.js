@@ -1,8 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage"; 
 import { persistReducer, persistStore } from "redux-persist";
-
-import testReducer from "./TestSlice";
 import authReducer from "./AuthSlice";
 import { userApi } from "../api/apiSlice";
 import { videoApi } from "../api/videoApi";
@@ -20,7 +18,6 @@ const persistConfig = {
 
 
 const rootReducer = combineReducers({
-  changedVal: testReducer,
   auth: authReducer,
   [userApi.reducerPath]: userApi.reducer,
   [videoApi.reducerPath]: videoApi.reducer,

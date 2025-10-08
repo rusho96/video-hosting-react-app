@@ -25,7 +25,7 @@ const HomePage = () => {
   });
   const trendingVideos = trendingResponse?.data?.[0]?.videos || [];
 
-  console.log(trendingResponse)
+  //console.log(trendingResponse)
 
   const {
     data: recentResponse,
@@ -67,7 +67,7 @@ const HomePage = () => {
       </div>
 
       <div className="p-4">
-        {/* 🔥 Trending Section */}
+        {/*  Trending Section */}
         <SectionHeader
           icon={<FiTrendingUp className="text-red-500" />}
           title="Trending Now"
