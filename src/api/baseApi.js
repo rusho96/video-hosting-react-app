@@ -6,7 +6,7 @@ const URL = import.meta.env.VITE_APP_URL
 console.log(URL)
 const token = localStorage.getItem("token");
 
-axios.get(`${BACKEND_URL}/playlist/getPlaylist/${userId}`, {
+axios.get(`${URL}/playlist/getPlaylist/${userId}`, {
   headers: { Authorization: `Bearer ${token}` },
   withCredentials: true
 });
