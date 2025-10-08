@@ -9,7 +9,7 @@ const token = localStorage.getItem("token");
 const api = axios.create({
   baseURL:URL,
   
-  withCredentials:tuue
+  withCredentials:true
 })
 api.interceptors.response.use(
   (response) => response,
