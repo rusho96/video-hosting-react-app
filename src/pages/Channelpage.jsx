@@ -4,7 +4,7 @@ import ChannelHeader from "../components/ChannelHeader";
 import ChannelTabs from "../components/Channeltabs";
 import ChannelVideos from "../components/Channelvideos";
 import ChannelPlaylists from "../components/Channelplaylist";
-import ChannelAbout from "../components/ChannelAbout";
+import ChannelAbout from "../components/Channelabout";
 
 import { useGetChannelProfileQuery } from "../api/apiSlice";
 
