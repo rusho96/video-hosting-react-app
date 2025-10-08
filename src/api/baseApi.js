@@ -8,7 +8,7 @@ const token = localStorage.getItem("token");
 
 const api = axios.create({
   baseURL:URL,
-  headers:{ Authorization: `Bearer ${token}` },
+  
   withCredentials:tuue
 })
 api.interceptors.response.use(
