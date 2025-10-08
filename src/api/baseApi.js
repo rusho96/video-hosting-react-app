@@ -4,9 +4,11 @@ import { store } from "../store/store";
 import { logout } from "../store/AuthSlice";
 const URL = import.meta.env.VITE_APP_URL
 console.log(URL)
-const api = axios.create({
-  baseURL: URL,
-  withCredentials: true, 
+const token = localStorage.getItem("token");
+
+axios.get(`${BACKEND_URL}/playlist/getPlaylist/${userId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+  withCredentials: true
 });
 
 
