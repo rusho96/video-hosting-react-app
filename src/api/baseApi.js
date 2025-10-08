@@ -6,12 +6,11 @@ const URL = import.meta.env.VITE_APP_URL
 console.log(URL)
 const token = localStorage.getItem("token");
 
-axios.get(`${URL}/playlist/getPlaylist/${userId}`, {
-  headers: { Authorization: `Bearer ${token}` },
-  withCredentials: true
-});
-
-
+const api = axios.create({
+  baseURL:URL,
+  headers:{ Authorization: `Bearer ${token}` },
+  withCredentials:tuue
+})
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
