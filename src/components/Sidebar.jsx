@@ -25,6 +25,7 @@ const Sidebar = ({ toggle }) => {
   const userData = useSelector((state) => state.auth.userData);
   const userId = userData?._id;
   const username = userData?.userName;
+  //console.log(userData,userId,username)
 
   const { data: subscribedData } = useGetSubscribedToChannelsQuery(userId, { skip: !userId });
   const { data: playlistData } = useGetUserPlaylistsQuery(userId, { skip: !userId });
