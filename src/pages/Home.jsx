@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import VideoCard from "../components/VideoCard";
 import CategoryChip from "../components/CategoryChip";
 import PlaylistCard from "../components/PlaylistCard";
+import { useAuth } from "../hooks/useAuth";
 import {
   useGetAllVideosQuery,
 } from "../api/videoApi";
 import { useGetUserPlaylistsQuery } from "../api/playlistApi";
 
 const HomePage = () => {
-  const userId = useSelector((state) => state.auth.userData?._id);
+  const { isHydrated, isLoggedIn, userId } = useAuth();
 
   
   const {
@@ -81,6 +82,7 @@ const HomePage = () => {
             {trendingVideos.map((video) => (
               <VideoCard
                 key={video._id}
+                videoId={video._id}
                 horizontalLayout={false}
                 className="flex-1 min-w-0"
                 title={video.title}
@@ -111,6 +113,7 @@ const HomePage = () => {
             {recentVideos.map((video) => (
               <VideoCard
                 key={video._id}
+                videoId={video._id}
                 horizontalLayout={false}
                 title={video.title}
                 channel={{ name: video.owner?.userName || "Unknown channel" }}
