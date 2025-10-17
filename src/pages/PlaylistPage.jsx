@@ -21,9 +21,9 @@ const PlaylistPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Playlist Header */}
+      
       <div className="flex flex-col md:flex-row gap-6 mb-8">
-        {/* Thumbnail */}
+        
         <div className="w-full md:w-1/3 lg:w-1/4 relative">
           <img
             src={
@@ -78,7 +78,7 @@ const PlaylistPage = () => {
         </div>
       </div>
 
-      {/* Videos List */}
+      
       <div className="space-y-4">
         {videos.length > 0 ? (
           videos.map((video, index) => (
@@ -95,7 +95,7 @@ const PlaylistPage = () => {
                 duration={video.duration}
                 previewVideo={video.videoFile}
                 className="flex-1"
-                showActions={true}
+                showActions={false}
               />
             </div>
           ))

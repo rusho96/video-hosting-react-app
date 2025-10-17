@@ -8,17 +8,19 @@ import { subscriptionApi } from "../api/subscriptionApi";
 import { playlistApi } from "../api/playlistApi";
 import { commentApi } from "../api/commentApi";
 import { likeApi } from "../api/likeApi";
+import searchReducer from "./searchSlice"
 
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"], 
+  whitelist: ["auth","search"], 
 };
 
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  search: searchReducer,
   [userApi.reducerPath]: userApi.reducer,
   [videoApi.reducerPath]: videoApi.reducer,
   [subscriptionApi.reducerPath]: subscriptionApi.reducer,

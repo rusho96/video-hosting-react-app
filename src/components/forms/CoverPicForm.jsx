@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateCoverPicMutation } from "../../api/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 
 export const CoverPicForm = function ({ user }) {
     const { register, handleSubmit } = useForm();
     const [updateCoverPic, { isLoading }] = useUpdateCoverPicMutation();
+    const navigate = useNavigate()
 
     const onSubmit = async (data) => {
         if (!data.coverPic?.[0]) return;
@@ -15,6 +17,7 @@ export const CoverPicForm = function ({ user }) {
         try {
             await updateCoverPic(formData).unwrap();
             alert("Cover picture updated!");
+            navigate(`/channel/${data.userName}`)
         } catch {
             alert("Failed to update cover pic");
         }
@@ -29,7 +32,7 @@ export const CoverPicForm = function ({ user }) {
             <button
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-700 text-white px-4 py-2 rounded"
             >
                 {isLoading ? "Uploading..." : "Upload"}
             </button>

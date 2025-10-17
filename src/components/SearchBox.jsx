@@ -3,6 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FiSearch, FiMic, FiX, FiClock } from 'react-icons/fi';
 import Input from './Input';
 import { useGetAllVideosQuery } from '../api/videoApi';
+import { useDispatch } from 'react-redux';
+import { setSearchResults } from '../store/searchSlice';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBox = ({
     onSearch,
@@ -17,11 +20,16 @@ const SearchBox = ({
     const [filteredVideos, setFilteredVideos] = useState([]);
     const inputRef = useRef(null);
     const searchBoxRef = useRef(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
    
     const { data: videosData, isLoading: videosLoading } = useGetAllVideosQuery();
+    const allVideos = videosData?.data?.[0]?.videos || [];
+    console.log(videosData)
 
-    // Click outside to close dropdown
+
+    
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
@@ -33,29 +41,43 @@ const SearchBox = ({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Frontend search filtering
+    
     useEffect(() => {
-        if (query.trim() && videosData?.videos) {
-            const filtered = videosData.videos.filter(video => 
+        if (query.trim() && allVideos.length > 0) {
+            const filtered = allVideos.filter(video =>
                 video.title?.toLowerCase().includes(query.toLowerCase()) ||
-                video.description?.toLowerCase().includes(query.toLowerCase()) ||
-                video.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-            ).slice(0, 5); 
-            
+                (video.description || '')?.toLowerCase().includes(query.toLowerCase()) ||
+                video.owner?.userName?.toLowerCase().includes(query.toLowerCase())
+            ).slice(0, 5);
             setFilteredVideos(filtered);
         } else {
             setFilteredVideos([]);
         }
     }, [query, videosData]);
 
+    console.log(`searchBox ${JSON.stringify(filteredVideos, null, 2)}`)
     const handleSubmit = (e) => {
         e.preventDefault();
         if (query.trim()) {
-            onSearch(query.trim());
+            const allFilteredVideos = allVideos.filter(video =>
+                video.title?.toLowerCase().includes(query.toLowerCase()) ||
+                (video.description || '')?.toLowerCase().includes(query.toLowerCase()) || 
+                video.owner?.userName?.toLowerCase().includes(query.toLowerCase()) 
+               
+            ) || [];
+
+            console.log('✅ Dispatching search results:', allFilteredVideos.length);
+
+            dispatch(setSearchResults({
+                results: allFilteredVideos,
+                query: query.trim()
+            }));
+
+            navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+            onSearch(query.trim(), allFilteredVideos);
             setShowDropdown(false);
         }
     };
-
     const handleInputChange = (e) => {
         const value = e.target.value;
         setQuery(value);
@@ -69,17 +91,42 @@ const SearchBox = ({
 
     const handleSuggestionClick = (searchTerm) => {
         setQuery(searchTerm);
-        onSearch(searchTerm);
+
+        const allFilteredVideos = allVideos.filter(video =>
+            video.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (video.description || '')?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            video.owner?.userName?.toLowerCase().includes(searchTerm.toLowerCase())
+        ) || [];
+
+        dispatch(setSearchResults({
+            results: allFilteredVideos,
+            query: searchTerm
+        }));
+
+        onSearch(searchTerm, allFilteredVideos);
         setShowDropdown(false);
     };
 
     const handleVideoClick = (video) => {
-        setQuery(video.title);
-        onSearch(video.title);
+        const searchTerm = video.title;
+        setQuery(searchTerm);
+
+        const allFilteredVideos = allVideos.filter(v =>
+            v.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (v.description || '')?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            v.owner?.userName?.toLowerCase().includes(searchTerm.toLowerCase())
+        ) || [];
+
+        dispatch(setSearchResults({
+            results: allFilteredVideos,
+            query: searchTerm
+        }));
+
+        onSearch(searchTerm, allFilteredVideos);
         setShowDropdown(false);
     };
 
-    // handleVoiceSearchClick function 
+     
     const handleVoiceSearchClick = async () => {
         if (onVoiceSearch) {
             try {
@@ -90,7 +137,7 @@ const SearchBox = ({
                 console.error('Voice search failed:', error);
             }
         } else {
-            // Fallback voice search implementation
+            
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 const recognition = new SpeechRecognition();
@@ -160,7 +207,7 @@ const SearchBox = ({
                         )}
                     </div>
 
-                    {/* Dropdown */}
+                    
                     {showDropdown && (showVideoSuggestions || showRecentSearches) && (
                         <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
                             

@@ -102,7 +102,7 @@ const router = createBrowserRouter([
       },
       {     path: "search",
            element:(
-            <AuthLayout authentication={false}>
+            <AuthLayout authentication={true}>
               <SearchResults/>
             </AuthLayout>
             )
@@ -113,67 +113,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  let colorObj={
-    "red":"black",
-    "black":"red"
-  }
-  let [color,setColor] = useState("red")
-
-  let changeColor=function(){
-    setColor(colorObj[color])
-    console.log(colorObj[color])
-  }
-
-  const likedVideos = [
-    { 
-      title: 'Dark',
-      channel: 'RT-Videos',
-      views: '5k',
-      duration: "08:43",
-      videoSrc: '/videos/Dark Season 3 _ Official Trailer _ Netflix.mp4',
-      thumbnail:'/image/dark-season-3 trailer.jpg',
-      channelImage:'/image/ch.jpg',
-    },
-    {
-      title: 'Dark',
-      channel: 'RT-Videos',
-      views: '5k',
-      duration: "08:43",
-      videoSrc: '/videos/Dark Season 3 _ Official Trailer _ Netflix.mp4',
-      thumbnail:'/image/dark-season-3 trailer.jpg',
-      channelImage:'/image/ch.jpg',
-    },
-    
-    {
-      title: 'Dark',
-      channel: 'RT-Videos',
-      views: '5k',
-      duration: "08:43",
-      videoSrc: '/videos/Dark Season 3 _ Official Trailer _ Netflix.mp4',
-      thumbnail:'/image/dark-season-3 trailer.jpg',
-      channelImage:'/image/ch.jpg',
-    },
-    {
-      title: 'Dark',
-      channel: 'RT-Videos',
-      views: '5k',
-      duration: "08:43",
-      videoSrc: '/videos/Dark Season 3 _ Official Trailer _ Netflix.mp4',
-      thumbnail:'/image/dark-season-3 trailer.jpg',
-      channelImage:'/image/ch.jpg',
-    },
-    {
-      title: 'Dark',
-      channel: 'RT-Videos',
-      views: '5k',
-      duration: "08:43",
-      videoSrc: '/videos/Dark Season 3 _ Official Trailer _ Netflix.mp4',
-      thumbnail:'/image/dark-season-3 trailer.jpg',
-      channelImage:'/image/ch.jpg',
-    },
-]
-  
-
   
   return <RouterProvider router={router} />
 }

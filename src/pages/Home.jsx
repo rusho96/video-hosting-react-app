@@ -4,14 +4,15 @@ import { useSelector } from "react-redux";
 import VideoCard from "../components/VideoCard";
 import CategoryChip from "../components/CategoryChip";
 import PlaylistCard from "../components/PlaylistCard";
-import { useAuth } from "../hooks/useAuth";
+
 import {
   useGetAllVideosQuery,
 } from "../api/videoApi";
 import { useGetUserPlaylistsQuery } from "../api/playlistApi";
 
 const HomePage = () => {
-  const { isHydrated, isLoggedIn, userId } = useAuth();
+  const userData = useSelector((state) => state.auth.userData);
+  const userId = userData?._id;
 
   
   const {
@@ -94,6 +95,7 @@ const HomePage = () => {
                 thumbnail={video.thumbnail || ""}
                 duration={video.duration || "N/A"}
                 previewVideo={video.videoFile}
+                showActions={false}
               />
             ))}
           </div>
@@ -122,6 +124,7 @@ const HomePage = () => {
                 thumbnail={video.thumbnail || ""}
                 duration={video.duration || "N/A"}
                 previewVideo={video.videoFile}
+                showActions={false}
               />
             ))}
           </div>

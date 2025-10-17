@@ -5,7 +5,7 @@ import { axiosBaseQuery } from "./axiosBaseQuery";
 export const videoApi = createApi({
   reducerPath: "videoApi",
   baseQuery: axiosBaseQuery({ baseUrl: "/video" }),
-  tagTypes: ["Video"],
+  tagTypes: ["Video","WatchHistory"],
   endpoints: (builder) => ({
     getVideoById: builder.query({
       query: (videoId) => ({ url: `/getVideoById/${videoId}`, method: "GET" }),
@@ -55,15 +55,34 @@ export const videoApi = createApi({
         url: "/clearWatchHistory",
         method: "DELETE",
       }),
-      invalidatesTags: ["Video"],
+      invalidatesTags: ["WatchHistory"],
     }),
 
     
-    getAllVideos: builder.query({
+    /*getAllVideos: builder.query({
       query: ({ userId, page = 1, limit = 10, sortBy = "createdAt", sortType = "desc" }) => ({
         url: `/getAllVideos?userId=${userId}&page=${page}&limit=${limit}&sortBy=${sortBy}&sortType=${sortType}`,
         method: "GET",
       }),
+    }),*/
+
+    getAllVideos: builder.query({
+      query: ({ userId = "", page = 1, limit = 50, sortBy = "createdAt", sortType = "desc" } = {}) => {
+        const queryParams = new URLSearchParams({
+          page,
+          limit,
+          sortBy,
+          sortType,
+        });
+
+
+        if (userId) queryParams.append("userId", userId);
+
+        return {
+          url: `/getAllVideos?${queryParams.toString()}`,
+          method: "GET",
+        };
+      },
     }),
 
     getUserLikedVideos: builder.query({

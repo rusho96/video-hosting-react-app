@@ -106,16 +106,16 @@ const CommentSection = ({
                       src={
                         c.owner?.avatar ||
                         `https://via.placeholder.com/40?text=${
-                          c.owner?.name?.[0] || "?"
+                          c.owner?.userName || "?"
                         }`
                       }
-                      alt={c.owner?.name || "Unknown"}
+                      alt={c.owner?.userName || "Unknown"}
                       className="w-10 h-10 rounded-full"
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm">
-                          {c.owner?.name || "Unknown"}
+                          {c.owner?.userName || "Unknown"}
                           {isCurrentUserComment && (
                             <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-1 rounded">You</span>
                           )}

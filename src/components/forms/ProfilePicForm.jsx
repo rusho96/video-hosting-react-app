@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateProfilePicMutation } from "../../api/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 
 
 export const ProfilePicForm = function ({ user }) {
     const { register, handleSubmit } = useForm();
     const [updateProfilePic, { isLoading }] = useUpdateProfilePicMutation();
+    const navigate = useNavigate()
 
     const onSubmit = async (data) => {
         if (!data.profilePic?.[0]) return;
@@ -16,6 +18,7 @@ export const ProfilePicForm = function ({ user }) {
         try {
             await updateProfilePic(formData).unwrap();
             alert("Profile picture updated!");
+            navigate(`/channel/${data.userName}`)
         } catch {
             alert("Failed to update profile pic");
         }

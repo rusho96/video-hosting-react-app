@@ -5,7 +5,7 @@ import { axiosBaseQuery } from "./axiosBaseQuery";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: axiosBaseQuery({ baseUrl: "/user" }),
-  tagTypes: ["User"],
+  tagTypes: ["User","WatchHistory"],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (formData) => ({ url: "/register", method: "POST", data: formData }),
@@ -56,7 +56,7 @@ export const userApi = createApi({
     }),
     getWatchHistory: builder.query({
       query: () => ({url: "/getWatchHistory", method: "GET"}),
-      providesTags: ["User"],
+      providesTags: ["WatchHistory"],
     }),
   }),
 });

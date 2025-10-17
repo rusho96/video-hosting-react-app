@@ -149,7 +149,10 @@ const Sidebar = ({ toggle }) => {
                 subscriptions.map((channel) => (
                   <button
                     key={channel._id}
-                    onClick={() => navigate(`/channel/${channel.userName}`)}
+                    onClick={() =>{
+                       //console.log(channel)
+                       navigate(`/channel/${channel?.subscribedToChannelDetail.userName}`)
+                    }}
                     className="flex items-center gap-3 w-full px-2 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <img

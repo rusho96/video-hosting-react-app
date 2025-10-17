@@ -12,7 +12,7 @@ const WatchHistoryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   
-  const { data: res = {}, isLoading } = useGetWatchHistoryQuery();
+  const { data: res = {}, isLoading , refetch} = useGetWatchHistoryQuery();
   const historyItems = res.data || [];
 
 
@@ -32,10 +32,12 @@ const WatchHistoryPage = () => {
   const handleClearAll = async () => {
     await clearHistory();
     setShowClearConfirmation(false);
+    await refetch();
   };
 
   const handleRemove = async (videoId) => {
     await removeFromHistory(videoId);
+    await refetch();
   };
 
   if (isLoading) {
@@ -141,10 +143,7 @@ const WatchHistoryPage = () => {
                 duration={`${Math.floor(item.duration)}s`} 
                 previewVideo={item.videoFile} 
                 currentUserId={"679f3d13c9e720e60babe6c7"} 
-                onLike={(id) => console.log("Liked:", id)}
-                onAddToPlaylist={(id) => console.log("Add to playlist:", id)}
-                onEdit={(id) => console.log("Edit:", id)}
-                onDelete={(id) => console.log("Delete:", id)}
+                showActions={false}
               />
 
 
@@ -156,9 +155,9 @@ const WatchHistoryPage = () => {
                 >
                   <FiX />
                 </button>
-                <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-full">
+                {/*<button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-full">
                   <FiFilter />
-                </button>
+                </button>*/}
               </div>
             </div>
           ))

@@ -66,7 +66,7 @@ const WatchVideoPage = () => {
   const { data: commentsResponse, error: commentsError } = useGetVideoCommentQuery(videoId);
   const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
   const [deleteComment, { isLoading: isDeletingComment }] = useDeleteCommentMutation();
-  console.log(commentsResponse)
+  //console.log(commentsResponse)
 
   
   const [toggleSubscription, { isLoading: isTogglingSubscription }] = useToggleSubscriptionMutation();
@@ -374,6 +374,7 @@ const WatchVideoPage = () => {
                 onClick={() => {
                   setCurrentVideoId(v._id);
                 }}
+                showActions={false}
               />
             ))
         )}
