@@ -10,7 +10,7 @@ import CreatePlaylistForm from "./forms/PlaylistForm";
 const ChannelVideos = ({ userId }) => {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.auth.userData?._id);
-
+  //console.log(currentUser)
   const { data, isLoading, error } = useGetAllVideosQuery({
     userId,
     page: 1,
@@ -35,7 +35,7 @@ const ChannelVideos = ({ userId }) => {
 
   const videos = data?.data?.[0]?.videos || [];
   const playlists = playlistsData?.data || [];
-
+  //console.log(videos)
   const handleLike = async (videoId) => {
     try {
       await toggleVideoLike(videoId).unwrap();
@@ -88,8 +88,8 @@ const ChannelVideos = ({ userId }) => {
             views={video.views}
             channel={{
               name: video.owner?.username || video.owner?.fullName,
-              avatar:video.owner?.avatar,
-              id: video.owner,
+              avatar:video.owner?.profilePic,
+              id: video.owner._id,
             }}
             currentUserId={currentUser}
             timestamp={video.createdAt}

@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import RTE from "./RTE";
+//import RTE from "./RTE";
 import Input from "./Input";
 import Select from "./Select";
 import {
@@ -13,7 +13,7 @@ import {
 export default function VideoForm({ video }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-
+  console.log(`userdata ${userData}`)
   const { register, handleSubmit, control, setValue } = useForm({
     defaultValues: {
       title: video?.title || "",
@@ -34,7 +34,8 @@ export default function VideoForm({ video }) {
   const visibilityOptions = ["Public", "Private", "Unlisted"];
 
   const submit = async (data) => {
-    console.log("🔥 Form Data:", data);
+    //console.log("🔥 Form Data:", data);
+    console.log(`clicked`);
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -44,7 +45,7 @@ export default function VideoForm({ video }) {
 
     try {
       if (!video) {
-        // নতুন ভিডিও -> videoFile + thumbnail 
+         
         if (data.videoFile && data.videoFile.length > 0)
           formData.append("videoFile", data.videoFile[0]);
         if (data.thumbnail && data.thumbnail.length > 0)
@@ -55,7 +56,7 @@ export default function VideoForm({ video }) {
           navigate(`/watchVideo/${res.data._id}`);
         }
       } else {
-        // আপডেটের সময় শুধু নতুন thumbnail 
+         
         if (data.thumbnail?.[0])
           formData.append("thumbnail", data.thumbnail[0]);
 
@@ -85,7 +86,7 @@ export default function VideoForm({ video }) {
           />
 
           {/* Description */}
-          <div className="mb-4">
+          {/*<div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700">Description</label>
             <Controller
               name="description"
@@ -100,6 +101,23 @@ export default function VideoForm({ video }) {
                 />
               )}
             />
+          </div>*/}
+
+
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              {...register("description" , {required:true})}
+              placeholder="Enter video description"
+              className="w-full border rounded p-2 text-sm"
+              rows={6}
+            ></textarea>
           </div>
 
           {/* Category & Visibility */}

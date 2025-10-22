@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateCoverPicMutation } from "../../api/apiSlice";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 export const CoverPicForm = function ({ user }) {
+    const userData = useSelector((state) => state.auth.userData);
+    const userName = userData?.userName;
     const { register, handleSubmit } = useForm();
     const [updateCoverPic, { isLoading }] = useUpdateCoverPicMutation();
     const navigate = useNavigate()
@@ -17,7 +19,7 @@ export const CoverPicForm = function ({ user }) {
         try {
             await updateCoverPic(formData).unwrap();
             alert("Cover picture updated!");
-            navigate(`/channel/${data.userName}`)
+            navigate(`/channel/${userName}`)
         } catch {
             alert("Failed to update cover pic");
         }

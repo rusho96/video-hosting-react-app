@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateProfilePicMutation } from "../../api/apiSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 
 export const ProfilePicForm = function ({ user }) {
+    const userData = useSelector((state) => state.auth.userData);
+    const userName = userData?.userName;
     const { register, handleSubmit } = useForm();
     const [updateProfilePic, { isLoading }] = useUpdateProfilePicMutation();
     const navigate = useNavigate()
@@ -18,7 +21,7 @@ export const ProfilePicForm = function ({ user }) {
         try {
             await updateProfilePic(formData).unwrap();
             alert("Profile picture updated!");
-            navigate(`/channel/${data.userName}`)
+            navigate(`/channel/${userName}`)
         } catch {
             alert("Failed to update profile pic");
         }
